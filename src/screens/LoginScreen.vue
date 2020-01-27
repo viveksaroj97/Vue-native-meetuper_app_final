@@ -22,8 +22,7 @@
             placeholder="Password"
             auto-capitalize="none"
             secure-text-entry
-            :on-blur="() => $v.form.password.$touch()" 
-          />
+            :on-blur="() => $v.form.password.$touch()" />
         </InputWithError>
     
       </nb-form>
