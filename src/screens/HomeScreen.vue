@@ -31,10 +31,6 @@ export default {
     };
   },
   computed: {
-    // After mutation we are getting here new data
-    todos() {
-      return this.$store.state.todos;
-    },
     meetups() {
       return this.$store.state.meetups.items;
     },
