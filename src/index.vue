@@ -14,7 +14,9 @@ import Navigation from './navigation'
 import moment from 'moment'
 import Vuelidate from 'vuelidate'
 
+
 import ScreenWithDrawer from '@/components/ScreenWithDrawer'
+import InputWithError from '@/components/InputWithError'
 import AppMessage from '@/components/AppMessage'
 
 
@@ -25,6 +27,7 @@ Vue.use(Vuelidate)
 // Registering components
 Vue.component('ScreenWithDrawer', ScreenWithDrawer )
 Vue.component('AppMessage', AppMessage )
+Vue.component( 'InputWithError', InputWithError )
 
 // Providing store to global context of vue
 Vue.prototype.$store = store
