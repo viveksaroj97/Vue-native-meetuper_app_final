@@ -2,23 +2,25 @@
   <nb-container :style="{backgroundColor: '#fff'}">
     <nb-header>
       <nb-body>
-        <nb-title>
-          Login
-        </nb-title>
+        <nb-title>Login</nb-title>
       </nb-body>
     </nb-header>
     <nb-content padder>
       <nb-form>
-        <nb-item>
+        <nb-item :error="$v.form.email.$dirty && !$v.form.email.required">
           <nb-input v-model="form.email" 
                     placeholder="Email" 
-                    auto-capitalize="none"/>
+                    auto-capitalize="none"
+                    :on-blur="() => $v.form.email.$touch()" />
         </nb-item>
-        <nb-item last>
-          <nb-input v-model="form.password"
-                    placeholder="Password" 
-                    auto-capitalize="none" 
-                    secure-text-entry />
+        <nb-item :error="$v.form.password.$dirty && !$v.form.password.required" last>
+          <nb-input
+            v-model="form.password"
+            placeholder="Password"
+            auto-capitalize="none"
+            secure-text-entry
+            :on-blur="() => $v.form.password.$touch()" 
+          />
         </nb-item>
       </nb-form>
       <view :style="{marginTop:10}">
@@ -27,36 +29,48 @@
         </nb-button>
       </view>
       <nb-button transparent :on-press="goToRegister">
-          <nb-text>Not Registered ? Register here</nb-text>
-        </nb-button>
+        <nb-text>Not Registered ? Register here</nb-text>
+      </nb-button>
     </nb-content>
   </nb-container>
 </template>
 
 
 <script>
+import { required } from "vuelidate/lib/validators";
 export default {
-    props: {
-        navigation: {
-            type:Object
-        }
-    },
-    data () {
-        return {
-            form: {
-                email: '',
-                password: ''
-            }      
-        }
-    },
-    methods: {
-        login () {
-            alert(`${JSON.stringify(this.form)}`)
-        },
-        goToRegister () {
-            this.navigation.navigate('Register')
-        }
+  props: {
+    navigation: {
+      type: Object
     }
-    
-}
+  },
+  data() {
+    return {
+      form: {
+        email: "",
+        password: ""
+      }
+    };
+  },
+  validations: {
+    form: {
+      email: {
+        required
+      },
+      password: {
+        required
+      }
+    }
+  },
+  methods: {
+    login() {
+      this.$v.form.$touch()
+
+      alert(`${JSON.stringify(this.form)}`)
+    },
+    goToRegister() {
+      this.navigation.navigate("Register");
+    }
+  }
+};
 </script>
