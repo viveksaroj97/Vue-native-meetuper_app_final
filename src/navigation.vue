@@ -8,16 +8,21 @@
 <script>
 import HomeScreen from "@/screens/HomeScreen";
 import MeetupDetailScreen from '@/screens/MeetupDetailScreen';
+
+import LoginScreen from '@/screens/LoginScreen'
+import RegisterScreen from '@/screens/RegisterScreen'
+
 import Screen1 from "@/screens/Screen1";
 import Screen2 from "@/screens/Screen2";
 import Screen3 from "@/screens/Screen3";
 
 import { Root } from "native-base";
 
-import { createAppContainer } from 'react-navigation'
+import { createAppContainer, createSwitchNavigator } from 'react-navigation'
 import { createStackNavigator} from 'react-navigation-stack'
 import { createBottomTabNavigator } from 'react-navigation-tabs'
 import { createDrawerNavigator } from 'react-navigation-drawer'
+
 
 const HomeStack = createStackNavigator(
   {
@@ -30,6 +35,13 @@ const HomeStack = createStackNavigator(
     initialRouteName:'Home'
   }
 )
+
+const AuthStack = createStackNavigator({
+  Login: LoginScreen,
+  Register: RegisterScreen
+
+})
+
 
 const SomeStack1 = createStackNavigator({
     Screen2
@@ -60,7 +72,11 @@ const TabNavigation = createBottomTabNavigator({
     Other: DrawerNavigation
 
 })
-const AppNavigation = createAppContainer(TabNavigation)
+const AppNavigation = createAppContainer(createSwitchNavigator({
+  auth: AuthStack,
+  tabs: TabNavigation
+  
+}))
 
 export default {
   components: {
