@@ -1,6 +1,7 @@
 <template>
   <scroll-view>
     <nb-text class="header-1">Featured Meetups</nb-text>
+    <nb-text :style="{paddingLeft: 20}">Welcome {{user.username}}</nb-text>
     
     <MeetupCard v-for="meetup in meetups"
                 :key="meetup._id"
@@ -36,6 +37,9 @@ export default {
     },
     meetups() {
       return this.$store.state.meetups.items;
+    },
+    user () {
+      return this.$store.state.auth.user
     }
   },
   created() {
