@@ -20,6 +20,8 @@ const meetupSchema = new Schema({
   joinedPeople: [{type: Schema.Types.ObjectId, ref: 'User'}]
 });
 
+
+
 module.exports = mongoose.model('Meetup', meetupSchema );
 
 
