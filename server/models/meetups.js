@@ -21,3 +21,6 @@ const meetupSchema = new Schema({
 });
 
 module.exports = mongoose.model('Meetup', meetupSchema );
+
+
+
