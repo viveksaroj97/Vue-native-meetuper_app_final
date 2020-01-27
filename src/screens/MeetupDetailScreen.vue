@@ -69,7 +69,7 @@ export default {
     }
   },
 
-  
+
 
   created() {
     const meetupId = this.navigation.getParam("meetupId", "undefined");
@@ -80,6 +80,9 @@ export default {
   }
 };
 </script>
+
+
+
 
 
 <style>
