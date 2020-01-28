@@ -15,6 +15,7 @@
 <script>
 import MeetupCard from '@/components/MeetupCard'
 
+
 export default {
   components: {
     MeetupCard
