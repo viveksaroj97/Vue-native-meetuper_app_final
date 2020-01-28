@@ -1,5 +1,6 @@
 import Vue from 'vue-native-core'
 import axios from 'axios'
+import axiosInstance from '@/services/axios'
 import { Platform } from 'react-native'
 
 
@@ -21,6 +22,15 @@ export default {
 
     },
     actions: {
+        async fetchSecret () {
+            return axiosInstance.get(`${BASE_URL}/meetups/secret`)
+               .then(res => {
+                   const data = res.data
+                   alert(JSON.stringify(data))
+               })
+               .catch(() => alert('Not Authorized'))
+        },
+
         fetchMeetups({commit, state}) {
             // return axios.get(`http://10.0.2.2:3001/api/v1/meetups`)
             return axios.get(`${BASE_URL}/meetups`)
