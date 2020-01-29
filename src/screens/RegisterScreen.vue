@@ -56,6 +56,7 @@
             last
             placeholder="Password Confirmation"
             auto-capitalize="none"
+            secure-text-entry
             :on-blur="() => $v.form.passwordConfirmation.$touch()"
           />
         </InputWithError>

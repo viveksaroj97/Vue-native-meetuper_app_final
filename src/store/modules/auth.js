@@ -59,6 +59,7 @@ export default {
                   return state.user
 
               })
+              .catch(() => undefined)
         },
 
         async verifyUser({dispatch, commit}) {

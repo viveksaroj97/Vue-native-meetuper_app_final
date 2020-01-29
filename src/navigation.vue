@@ -32,7 +32,11 @@ const HomeStack = createStackNavigator(
     
   },
   {
-    initialRouteName:'Home'
+    initialRouteName:'Home',
+    headerMode:'none',
+    navigationOptions: {
+        headerVisible: false
+    }
   }
 )
 
