@@ -4,22 +4,21 @@
     <nb-text v-if="user" :style="{paddingLeft: 20}">Welcome {{user.username}}</nb-text>
 
     <nb-button transparent :on-press="logout">
-        <nb-text>Logout</nb-text>
-      </nb-button>
-    
-    <MeetupCard v-for="meetup in meetups"
-                :key="meetup._id"
-                :meetup="meetup" 
-                :navigateToDetail="goToMeetupDetail"/>
+      <nb-text>Logout</nb-text>
+    </nb-button>
 
-
+    <MeetupCard
+      v-for="meetup in meetups"
+      :key="meetup._id"
+      :meetup="meetup"
+      :navigateToDetail="goToMeetupDetail"
+    />
   </scroll-view>
 </template>
 
 <script>
-import MeetupCard from '@/components/MeetupCard'
-import { AsyncStorage } from 'native-base'
-
+import MeetupCard from "@/components/MeetupCard";
+import { AsyncStorage } from "react-native";
 
 export default {
   components: {
@@ -40,8 +39,8 @@ export default {
     meetups() {
       return this.$store.state.meetups.items;
     },
-    user () {
-      return this.$store.state.auth.user
+    user() {
+      return this.$store.state.auth.user;
     }
   },
   created() {
@@ -53,17 +52,12 @@ export default {
     goToScreen1() {
       this.navigation.navigate("ScreenOne");
     },
-    goToMeetupDetail (meetupId) {
-      this.navigation.navigate('Meetup', {meetupId})
+    goToMeetupDetail(meetupId) {
+      this.navigation.navigate("Meetup", { meetupId });
     },
-
-
-
-
-    
-   async logout () {
-     await AsyncStorage.removeItem('meetuper-jwt')
-       
+    logout() {
+      // Removes user TOKEN, therefore user is not authenticated
+      AsyncStorage.removeItem('meetuper-jwt')
     }
   }
 };
@@ -71,11 +65,11 @@ export default {
 
 
 <style>
-  .header-1 {
-    font-size: 23px;
-    padding: 20px;
-    font-weight: bold;
-    align-self: center;
-    color:mediumblue;
-  }
+.header-1 {
+  font-size: 23px;
+  padding: 20px;
+  font-weight: bold;
+  align-self: center;
+  color: mediumblue;
+}
 </style>

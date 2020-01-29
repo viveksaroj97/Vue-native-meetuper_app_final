@@ -2,51 +2,62 @@
   <nb-container :style="{backgroundColor: '#fff'}">
     <nb-header>
       <nb-body>
-        <nb-title>
-          Register
-        </nb-title>
+        <nb-title>Register</nb-title>
       </nb-body>
     </nb-header>
     <nb-content padder>
       <nb-form>
-        <InputWithError :error="$v.form.username.$dirty && !$v.form.username.minLength" 
-                         msg="Minimum lenth is 8 character">
-          <nb-input v-model="form.username"
-                    placeholder="Username" 
-                    auto-capitalize="none"
-                    :on-blur="() => $v.form.username.$touch()" />
+        <InputWithError
+          :error="$v.form.username.$dirty && !$v.form.username.minLength"
+          msg="Minimum lenth is 8 character"
+        >
+          <nb-input
+            v-model="form.username"
+            placeholder="Username"
+            auto-capitalize="none"
+            :on-blur="() => $v.form.username.$touch()"
+          />
         </InputWithError>
         <nb-item>
-          <nb-input v-model="form.name"
-                    placeholder="Full Name" 
-                    auto-capitalize="none" />
+          <nb-input v-model="form.name" placeholder="Full Name" auto-capitalize="none" />
         </nb-item>
-        <InputWithError :error="$v.form.email.$dirty && !$v.form.email.validEmail" 
-                         msg="Email format is not valid">
-          <nb-input v-model="form.email"
-                    placeholder="Email" 
-                    auto-capitalize="none"
-                    :on-blur="() => $v.form.email.$touch()" />
+        <InputWithError
+          :error="$v.form.email.$dirty && !$v.form.email.validEmail"
+          msg="Email format is not valid"
+        >
+          <nb-input
+            v-model="form.email"
+            placeholder="Email"
+            auto-capitalize="none"
+            :on-blur="() => $v.form.email.$touch()"
+          />
         </InputWithError>
         <nb-item>
-          <nb-input v-model="form.avatar" 
-                    placeholder="Avatar Url" 
-                    auto-capitalize="none" />
+          <nb-input v-model="form.avatar" placeholder="Avatar Url" auto-capitalize="none" />
         </nb-item>
-        <InputWithError :error="$v.form.password.$dirty && !$v.form.password.required" 
-                         msg="Password is required">
-          <nb-input v-model="form.password"
-                    placeholder="Password" 
-                    auto-capitalize="none" 
-                    secure-text-entry
-                    :on-blur="() => $v.form.password.$touch()" />
+        <InputWithError
+          :error="$v.form.password.$dirty && !$v.form.password.required"
+          msg="Password is required"
+        >
+          <nb-input
+            v-model="form.password"
+            placeholder="Password"
+            auto-capitalize="none"
+            secure-text-entry
+            :on-blur="() => $v.form.password.$touch()"
+          />
         </InputWithError>
-        <InputWithError :error="$v.form.passwordConfirmation.$dirty && !$v.form.passwordConfirmation.sameAsPassword" 
-                         msg="Password must be same">
-          <nb-input v-model="form.passwordConfirmation"
-                    last placeholder="Password Confirmation" 
-                    auto-capitalize="none"
-                    :on-blur="() => $v.form.passwordConfirmation.$touch()" />
+        <InputWithError
+          :error="$v.form.passwordConfirmation.$dirty && !$v.form.passwordConfirmation.sameAsPassword"
+          msg="Password must be same"
+        >
+          <nb-input
+            v-model="form.passwordConfirmation"
+            last
+            placeholder="Password Confirmation"
+            auto-capitalize="none"
+            :on-blur="() => $v.form.passwordConfirmation.$touch()"
+          />
         </InputWithError>
       </nb-form>
       <view :style="{marginTop:10}">
@@ -65,53 +76,63 @@
 
 <script>
 import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
+import { Toast } from "native-base";
+
+
 export default {
-    props: {
-        navigation: {
-            type: Object
-        }
-
-
-    },
-    data () {
-        return {
-            form: {
-                username: '',
-                name: '',
-                avatar: '',
-                email: '',
-                password: '',
-                passwordConfirmation: ''
-            }
-        }
-    },
-    validations: {
-        form: {
-            email: {
-                validEmail: email
-            },
-            password: {
-                required
-            },
-            passwordConfirmation: {
-                sameAsPassword: sameAs('password')
-            },
-            username: {
-                minLength: minLength(8)
-            }
-        }
-    },
-    methods: {
-        register () {
-            this.$v.form.$touch()
-            alert(`${JSON.stringify(this.form)}`)
-
-        },
-        goToLogin () {
-            this.navigation.navigate("Login")
-        }
-
+  props: {
+    navigation: {
+      type: Object
     }
-    
-}
+  },
+  data() {
+    return {
+      form: {
+        username: "",
+        name: "",
+        avatar: "",
+        email: "",
+        password: "",
+        passwordConfirmation: ""
+      }
+    };
+  },
+  validations: {
+    form: {
+      email: {
+        validEmail: email
+      },
+      password: {
+        required
+      },
+      passwordConfirmation: {
+        sameAsPassword: sameAs("password")
+      },
+      username: {
+        minLength: minLength(8)
+      }
+    }
+  },
+  methods: {
+    register() {
+      this.$v.form.$touch();
+      if (!this.$v.form.$invalid) {
+        this.$store
+          .dispatch("auth/register", this.form)
+          .then(() => this.navigation.navigate("Login"))
+          .catch(() => {
+            Toast.show({
+              text: "Ooops, something went wrong",
+              buttonText: "Okay",
+              type: "danger",
+              duration: 3000
+            });
+          });
+      }
+    },
+    goToLogin() {
+      this.navigation.navigate("Login");
+    }
+  }
+};
 </script>

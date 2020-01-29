@@ -1,5 +1,5 @@
 <template>
-  <nb-container class="spinner-container" v-if="true">
+  <nb-container class="spinner-container" v-if="isCheckingUser">
     <nb-spinner color='blue' />
   </nb-container>
   <nb-container v-else :style="{backgroundColor: '#fff'}">
@@ -54,7 +54,7 @@
 <script>
 import { required } from "vuelidate/lib/validators";
 import { Toast } from "native-base";
-// import { AsyncStorage } from 'native-base'
+// import { AsyncStorage } from 'react-native'
 
 export default {
   props: {
@@ -83,7 +83,7 @@ export default {
   },
     
 // This is redirect the user to the homeScreen when successfully logged in 
- created () {
+ async created () {
   //  await AsyncStorage.removeItem('meetuper-jwt') // Removes the user token
     this.isCheckingUser = true
     this.$store.dispatch('auth/verifyUser')
