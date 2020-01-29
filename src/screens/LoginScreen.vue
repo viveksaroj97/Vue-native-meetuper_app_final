@@ -1,5 +1,8 @@
 <template>
-  <nb-container :style="{backgroundColor: '#fff'}">
+  <nb-container class="spinner-container" v-if="true">
+    <nb-spinner color='blue' />
+  </nb-container>
+  <nb-container v-else :style="{backgroundColor: '#fff'}">
     <nb-header>
       <nb-body>
         <nb-title>Login</nb-title>
@@ -40,6 +43,9 @@
       <nb-button transparent :on-press="goToRegister">
         <nb-text>Not Registered ? Register here</nb-text>
       </nb-button>
+      <nb-button transparent :on-press="goToHome">
+        <nb-text>Navigate to Home</nb-text>
+      </nb-button>
     </nb-content>
   </nb-container>
 </template>
@@ -48,7 +54,8 @@
 <script>
 import { required } from "vuelidate/lib/validators";
 import { Toast } from "native-base";
-import { AsyncStorage } from 'react-native'
+import { AsyncStorage } from 'native-base'
+
 export default {
   props: {
     navigation: {
@@ -57,6 +64,7 @@ export default {
   },
   data() {
     return {
+      isCheckingUser: false,
       form: {
         email: "",
         password: ""
@@ -73,10 +81,14 @@ export default {
       }
     }
   },
-
-  created () {
+    
+// This is redirect the user to the homeScreen when successfully logged in 
+ created () {
+  //  await AsyncStorage.removeItem('meetuper-jwt') // Removes the user token
+    this.isCheckingUser = true
     this.$store.dispatch('auth/verifyUser')
        .then(() => this.navigation.navigate('Home'))
+       .catch(() => this.isCheckingUser =false)
     
   },
 
@@ -101,9 +113,20 @@ export default {
       }
     },
     goToRegister() {
-      this.navigation.navigate("Register");
+      this.navigation.navigate('Register');
+    },
+    goToHome () {
+      this.navigation.navigate('Home')
     }
   }
 };
 
 </script>
+
+
+<style>
+.spinner-container {
+  display: flex;
+  justify-content: center;
+}
+</style>

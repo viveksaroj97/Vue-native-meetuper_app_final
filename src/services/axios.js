@@ -9,7 +9,7 @@ const axiosInstance = axios.create({
 
 
 // Interceptors : interceptors are special functions which intercepts your requests 
-// and in that we can pass some additional info to ur request
+// and in that we can pass some additional info to ur request(i.e. TOKEN of the user)
 
 axiosInstance.interceptors.request.use(async function (config) {
     const token = await AsyncStorage.getItem('meetuper-jwt')
