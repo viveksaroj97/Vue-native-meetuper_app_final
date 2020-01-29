@@ -1,8 +1,5 @@
 <template>
-  <nb-container class="spinner-container" v-if="isCheckingUser">
-    <nb-spinner color="blue" />
-  </nb-container>
-  <nb-container v-else :style="{backgroundColor: '#fff'}">
+  <nb-container :style="{backgroundColor: '#fff'}">
     <AppNavigationEvents :onDidFocus="checkForMessage" />
     <nb-header>
       <nb-body>
@@ -65,7 +62,6 @@ export default {
   },
   data() {
     return {
-      isCheckingUser: false,
       form: {
         email: "",
         password: ""
@@ -85,14 +81,12 @@ export default {
 
   // This is redirect the user to the homeScreen when successfully logged in
   async created() {
-    //  await AsyncStorage.removeItem('meetuper-jwt') // Removes the user token
-    this.isCheckingUser = true;
-    this.$store.dispatch("auth/verifyUser")
-      .then(() => this.navigation.navigate("Home"))
-      .catch(() => {
-        this.isCheckingUser = false
-        this.checkForMessage()
-        });
+    // getters can get the state
+    // auth/isAuth : gets the state 
+    const isAuth = this.$store.getters['auth/isAuth']
+
+    if (isAuth) { this.navigation.navigate("Home") }
+   
   },
 
   methods: {
@@ -136,10 +130,3 @@ export default {
 };
 </script>
 
-
-<style>
-.spinner-container {
-  display: flex;
-  justify-content: center;
-}
-</style>

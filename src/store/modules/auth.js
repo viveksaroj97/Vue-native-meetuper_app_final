@@ -25,8 +25,14 @@ export default {
 
     state: {
         user: null,
-        isAuth: false
+        isAuthResolved: false,
 
+    },
+    getters: {
+        isAuth (state) {
+            return !!state.user
+
+        }
     },
     actions: {
         login({ commit, state }, userData) {
@@ -41,7 +47,7 @@ export default {
 
         register (context, userData) {
             return axios.post(`${BASE_URL}/users/register`, userData)
-            
+
         },
 
         fetchCurrentUser ({commit, state}) {
@@ -55,7 +61,7 @@ export default {
               })
         },
 
-        async verifyUser({dispatch}) {
+        async verifyUser({dispatch, commit}) {
             // The jwt has all the login data of a user such as:
             // token, name, etc... from which we are getting the token 
             //
@@ -64,12 +70,17 @@ export default {
             // Promise resolve or rejects the async operations and handle it
             if (jwt && isTokenValid(jwt)) {
                 const user = await dispatch('fetchCurrentUser')
+                // Setting resolveAuth to true, when authenticated
+                commit('resolveAuth')
 
                 return user ? Promise.resolve(jwt) 
                             : Promise.reject('Token is not valid')
 
                 return Promise.resolve(jwt)
             } else {
+                // Setting resolveAuth to true, even when not authenticated
+                // -because we want to display something
+                commit('resolveAuth')
                 return Promise.reject('Token is not valid')
             }
         }
@@ -77,6 +88,9 @@ export default {
     mutations: {
         setAuthUser(state, user) {
             return state.user = user
+        },
+        resolveAuth (state) {
+            state.isAuthResolved = true
         }
     }
 
