@@ -3,6 +3,7 @@
     <nb-spinner color="blue" />
   </nb-container>
   <nb-container v-else :style="{backgroundColor: '#fff'}">
+    <AppNavigationEvents :onDidFocus="checkForMessage" />
     <nb-header>
       <nb-body>
         <nb-title>Login</nb-title>

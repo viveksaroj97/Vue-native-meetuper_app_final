@@ -18,6 +18,7 @@ import Vuelidate from 'vuelidate'
 import ScreenWithDrawer from '@/components/ScreenWithDrawer'
 import InputWithError from '@/components/InputWithError'
 import AppMessage from '@/components/AppMessage'
+import AppNavigationEvents from '@/react-components/AppNavigationEvents'
 
 
 // Registering Plugins
@@ -28,6 +29,7 @@ Vue.use(Vuelidate)
 Vue.component('ScreenWithDrawer', ScreenWithDrawer )
 Vue.component('AppMessage', AppMessage )
 Vue.component( 'InputWithError', InputWithError )
+Vue.component( 'AppNavigationEvents', AppNavigationEvents )
 
 // Providing store to global context of vue
 Vue.prototype.$store = store
