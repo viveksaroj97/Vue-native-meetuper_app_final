@@ -2,6 +2,10 @@
   <scroll-view>
     <nb-text class="header-1">Featured Meetups</nb-text>
     <nb-text v-if="user" :style="{paddingLeft: 20}">Welcome {{user.username}}</nb-text>
+
+    <nb-button transparent :on-press="logout">
+        <nb-text>Logout</nb-text>
+      </nb-button>
     
     <MeetupCard v-for="meetup in meetups"
                 :key="meetup._id"
@@ -14,6 +18,7 @@
 
 <script>
 import MeetupCard from '@/components/MeetupCard'
+import { AsyncStorage } from 'native-base'
 
 
 export default {
@@ -50,6 +55,15 @@ export default {
     },
     goToMeetupDetail (meetupId) {
       this.navigation.navigate('Meetup', {meetupId})
+    },
+
+
+
+
+    
+   async logout () {
+     await AsyncStorage.removeItem('meetuper-jwt')
+       
     }
   }
 };

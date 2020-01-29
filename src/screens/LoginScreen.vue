@@ -54,7 +54,7 @@
 <script>
 import { required } from "vuelidate/lib/validators";
 import { Toast } from "native-base";
-import { AsyncStorage } from 'native-base'
+// import { AsyncStorage } from 'native-base'
 
 export default {
   props: {
