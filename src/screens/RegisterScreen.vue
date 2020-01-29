@@ -68,6 +68,9 @@
       <nb-button transparent :on-press="goToLogin">
         <nb-text>Already Registered ? Login here</nb-text>
       </nb-button>
+      <nb-button transparent :on-press="sendMessageToLogin">
+        <nb-text>Send Message</nb-text>
+      </nb-button>
     </nb-content>
   </nb-container>
 </template>
@@ -132,6 +135,10 @@ export default {
     },
     goToLogin() {
       this.navigation.navigate("Login");
+    },
+    sendMessageToLogin () {
+      //This will redirect to 'login' page after registration 
+      this.navigation.navigate('Login', {message: 'You have been successfully registered. You can login now :)'})
     }
   }
 };

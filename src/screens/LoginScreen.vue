@@ -1,6 +1,6 @@
 <template>
   <nb-container class="spinner-container" v-if="isCheckingUser">
-    <nb-spinner color='blue' />
+    <nb-spinner color="blue" />
   </nb-container>
   <nb-container v-else :style="{backgroundColor: '#fff'}">
     <nb-header>
@@ -81,15 +81,17 @@ export default {
       }
     }
   },
-    
-// This is redirect the user to the homeScreen when successfully logged in 
- async created () {
-  //  await AsyncStorage.removeItem('meetuper-jwt') // Removes the user token
-    this.isCheckingUser = true
-    this.$store.dispatch('auth/verifyUser')
-       .then(() => this.navigation.navigate('Home'))
-       .catch(() => this.isCheckingUser =false)
-    
+
+  // This is redirect the user to the homeScreen when successfully logged in
+  async created() {
+    //  await AsyncStorage.removeItem('meetuper-jwt') // Removes the user token
+    this.isCheckingUser = true;
+    this.$store.dispatch("auth/verifyUser")
+      .then(() => this.navigation.navigate("Home"))
+      .catch(() => {
+        this.isCheckingUser = false
+        this.checkForMessage()
+        });
   },
 
   methods: {
@@ -112,15 +114,25 @@ export default {
           });
       }
     },
-    goToRegister() {
-      this.navigation.navigate('Register');
+    checkForMessage() {
+      const message = this.navigation.getParam('message');
+      if (message) {
+        Toast.show({
+          text: message,
+          buttonText: "Okay",
+          type: "success",
+          duration: 3000
+        });
+      }
     },
-    goToHome () {
-      this.navigation.navigate('Home')
+    goToRegister() {
+      this.navigation.navigate("Register");
+    },
+    goToHome() {
+      this.navigation.navigate("Home");
     }
   }
 };
-
 </script>
 
 
