@@ -6,9 +6,7 @@
        <scroll-view>
          <nb-text class="header-1">Featured Meetups</nb-text>
          <nb-text v-if="user" :style="{paddingLeft: 20}">Welcome {{user.username}}</nb-text>
-         <nb-button transparent :on-press="logout">
-           <nb-text>Logout</nb-text>
-           </nb-button>
+         
            <MeetupCard v-for="meetup in meetups"
                        :key="meetup._id"
                        :meetup="meetup"

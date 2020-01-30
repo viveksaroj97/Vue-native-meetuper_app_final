@@ -1,12 +1,11 @@
 import Vue from 'vue-native-core'
-import axios from 'axios'
 import axiosInstance from '@/services/axios'
 import { Platform } from 'react-native'
 
 
 
-const BASE_URL = Platform.OS === 'ios' ? 'http://localhost:3001/api/v1' 
-                                       : 'http://10.0.2.2:3001/api/v1'
+// const BASE_URL = Platform.OS === 'ios' ? 'http://localhost:3001/api/v1' 
+//                                        : 'http://10.0.2.2:3001/api/v1'
 
 
 
@@ -23,7 +22,8 @@ export default {
     },
     actions: {
         async fetchSecret () {
-            return axiosInstance.get(`${BASE_URL}/meetups/secret`)
+            return axiosInstance.get(`/meetups/secret`)
+            // return axiosInstance.get(`${BASE_URL}/meetups/secret`)
                .then(res => {
                    const data = res.data
                    alert(JSON.stringify(data))
@@ -33,7 +33,8 @@ export default {
 
         fetchMeetups({commit, state}) {
             // return axios.get(`http://10.0.2.2:3001/api/v1/meetups`)
-            return axios.get(`${BASE_URL}/meetups`)
+            // return axios.get(`${BASE_URL}/meetups`)
+            return axiosInstance.get(`/meetups`)
               .then(res => {
                   const meetups = res.data
                   commit('setItems',{items: meetups, resource: 'meetups'}, {root:true})
@@ -42,7 +43,8 @@ export default {
         },
         fetchMeetupById ({commit, state}, meetupId) {
             commit('setMeetup', {})
-            return axios.get(`${BASE_URL}/meetups/${meetupId}`)
+            return axiosInstance.get(`/meetups/${meetupId}`)
+            // return axios.get(`${BASE_URL}/meetups/${meetupId}`)
               .then(res => {
                   const meetup = res.data
                   commit('setMeetup', meetup)
